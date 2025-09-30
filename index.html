@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archivos Atlas - Inicio de Sesión</title>
+    <link rel="stylesheet" href="styles.css" />
+<script src="basededatos.js"></script>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <nav aria-label="Navegación principal">
+                <a href="#" id="btn-recopilador" class="active">Subir</a>
+                <a href="#" id="btn-buscar">Buscar</a>
+                <a href="#" id="btn-nosotros">Nosotros</a>
+                <a href="#" id="btn-contacto">Contacto</a>
+            </nav>
+        </header>
+
+        <main class="container" role="main">
+            <section class="login-container" id="seccion-login" aria-labelledby="login-title">
+                <h2 id="login-title">Iniciar Sesión</h2>
+                <form id="login-form" action="#" method="POST" autocomplete="on">
+                    <div class="form-group">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" name="username" autocomplete="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit">Iniciar Sesión</button>
+                    <p class="message small" style="margin-top:8px;">¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a></p>
+                </form>
+            </section>
+
+            <section class="recopilador panel" id="seccion-recopilador">
+                <h2>Recopilador de Archivos</h2>
+                <form id="form-archivos" class="small" onsubmit="return false;">
+                    <label for="archivo">Selecciona archivos (múltiples permitidos):</label><br>
+                    <input type="file" id="archivo" name="archivo" multiple aria-label="Seleccionar archivos">
+                    <ul class="archivo-lista" id="archivo-lista" aria-live="polite"></ul>
+                    <span id="archivo-empty" class="empty small">No hay archivos seleccionados.</span>
+                </form>
+            </section>
+
+            <section id="seccion-buscar" class="panel hidden">
+                <h2>Buscar Archivos</h2>
+                <div class="small">
+                    <input type="text" id="buscar-input" placeholder="Escribe parte del nombre..." aria-label="Buscar archivos">
+                    <p style="margin-top:0.5rem;color:var(--muted);">Escribe para filtrar los archivos listados en "Recopilador".</p>
+                </div>
+            </section>
+
+            <section id="seccion-nosotros" class="panel hidden small">
+                <h2>Sobre Nosotros</h2>
+                <p>somos un equipo de estudiantes que buscan facilitar la gestión y el intercambio de archivos entre usuarios. Nuestro objetivo es crear una plataforma intuitiva y segura para que los usuarios puedan subir, buscar y compartir archivos de manera eficiente.</p>
+            </section>
+
+            <section id="seccion-contacto" class="panel hidden small">
+                <h2>Contacto</h2>
+                <p>Correo: proyectoatlas04@gmail.com</p>
+                <p>Teléfono: +57 3197741431</p>
+            </section>
+        </main>
+    </div>
+            <section class="recopilador panel" id="seccion-recopilador">
+                <h2>Recopilador de Archivos</h2>
+                <form id="form-archivos" class="small" onsubmit="return false;">
+                    <label for="archivo">Selecciona archivos (múltiples permitidos):</label><br>
+                    <div class="form-group">
+                        <!-- Botón visible que abre el selector de archivos -->
+                        <button id="btn-select-archivo" type="button" onclick="document.getElementById('archivo').click()">Seleccionar archivos</button>
+                        <!-- input real (oculto) que maneja la selección; el JS ya escucha por id="archivo" -->
+                        <input id="archivo" type="file" multiple style="display:none" />
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Lista donde el JS renderiza los archivos seleccionados -->
+                        <ul id="archivo-lista" class="archivo-lista" aria-live="polite"></ul>
+                        <!-- Mensaje cuando no hay archivos o no hay coincidencias -->
+                        <span id="archivo-empty" class="empty">No hay archivos seleccionados.</span>
+                    </div>
+                </form>
+            </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dom = {
+                navButtons: document.querySelectorAll('nav a'),
+                inputArchivo: document.getElementById('archivo'),
+                listaArchivos: document.getElementById('archivo-lista'),
+                archivoEmpty: document.getElementById('archivo-empty'),
+                buscarInput: document.getElementById('buscar-input'),
+                allSections: document.querySelectorAll('main > section')
+            };
+
+            const fileCache = new Map();
+            const createdObjectURLs = new Set();
+            let currentFiles = [];
+
+            const switchSection = (targetId) => {
+                dom.allSections.forEach(section => {
+                    section.classList.toggle('hidden', section.id !== targetId);
+                });
+                dom.navButtons.forEach(btn => {
+                    const btnSectionId = `seccion-${btn.id.replace('btn-', '')}`;
+                    btn.classList.toggle('active', btnSectionId === targetId);
+                });
+            };
+
+            const updateEmptyState = (message = 'No hay archivos seleccionados.') => {
+                const hasVisibleFiles = [...dom.listaArchivos.children].some(li => li.style.display !== 'none');
+                const hasFiles = currentFiles.length > 0;
+
+                dom.archivoEmpty.textContent = hasFiles && !hasVisibleFiles ? 'No se encontraron archivos con ese nombre.' : message;
+                dom.archivoEmpty.style.display = (hasFiles && hasVisibleFiles) ? 'none' : 'block';
+            };
+
+            const renderFiles = (files) => {
+                currentFiles = files ? [...files] : [];
+                clearObjectURLs();
+                fileCache.clear();
+                dom.listaArchivos.innerHTML = '';
+
+                if (currentFiles.length === 0) {
+                    updateEmptyState();
+                    return;
+                }
+
+                const fragment = document.createDocumentFragment();
+                currentFiles.forEach((file) => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+
+                    const url = URL.createObjectURL(file);
+                    createdObjectURLs.add(url);
+                    a.href = url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.textContent = file.name;
+                    a.setAttribute('aria-label', `Abrir ${file.name}`);
+
+                    li.appendChild(a);
+                    fragment.appendChild(li);
+
+                    fileCache.set(file.name.toLowerCase(), li);
+                });
+
+                dom.listaArchivos.appendChild(fragment);
+                updateEmptyState();
+            };
+
+            const filterFiles = () => {
+                const query = dom.buscarInput.value.trim().toLowerCase();
+                let hasVisibleFiles = false;
+
+                fileCache.forEach((listItem, fileName) => {
+                    const isVisible = fileName.includes(query);
+                    listItem.style.display = isVisible ? '' : 'none';
+                    if (isVisible) hasVisibleFiles = true;
+                });
+
+                updateEmptyState();
+            };
+
+            const clearObjectURLs = () => {
+                createdObjectURLs.forEach(url => URL.revokeObjectURL(url));
+                createdObjectURLs.clear();
+            };
+
+            dom.navButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = `seccion-${btn.id.replace('btn-', '')}`;
+                    switchSection(sectionId);
+                });
+            });
+
+            if (dom.inputArchivo) dom.inputArchivo.addEventListener('change', (e) => renderFiles(e.target.files));
+            if (dom.buscarInput) dom.buscarInput.addEventListener('input', filterFiles);
+            window.addEventListener('beforeunload', clearObjectURLs);
+
+            switchSection('seccion-recopilador');
+        });
+    </script>
+</body>
+</html>
