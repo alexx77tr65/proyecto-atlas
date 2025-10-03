@@ -193,3 +193,6 @@ input[type="password"]:focus {
     nav { flex-direction: column; gap: 0.5rem; }
     nav a { width: 100%; }
 }
+        .panel { display: none; }
+        #seccion-login { display: block; } 
+        #app-nav-container { display: none; }
