@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archivos Atlas - Panel</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="base_de_datos.js" defer></script>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <nav aria-label="Navegación principal">
+                <a href="dashboard.html" id="btn-recopilador" class="active">Subir</a>
+                <a href="#" id="btn-buscar">Buscar</a>
+                <a href="#" id="btn-nosotros">Nosotros</a>
+                <a href="#" id="btn-contacto">Contacto</a>
+                <a href="index.html" id="btn-logout">Cerrar Sesión</a>
+            </nav>
+        </header>
+
+        <main class="container" role="main">
+            <!-- Recopilador -->
+            <section class="recopilador panel" id="seccion-recopilador">
+                <h2>Recopilador de Archivos</h2>
+                <form id="form-archivos" class="small" onsubmit="return false;">
+                    <div class="form-group">
+                        <button id="btn-select-archivo" type="button" onclick="document.getElementById('archivo').click()">Seleccionar archivos</button>
+                        <input id="archivo" type="file" multiple style="display:none" />
+                    </div>
+                    <div class="form-group">
+                        <ul id="archivo-lista" class="archivo-lista" aria-live="polite"></ul>
+                        <span id="archivo-empty" class="empty">No hay archivos seleccionados.</span>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Buscar -->
+            <section id="seccion-buscar" class="panel hidden">
+                <h2>Buscar Archivos</h2>
+                <div class="small">
+                    <input type="text" id="buscar-input" placeholder="Escribe parte del nombre..." aria-label="Buscar archivos">
+                    <p class="muted">Escribe para filtrar los archivos listados en "Recopilador".</p>
+                </div>
+            </section>
+
+            <!-- Nosotros -->
+            <section id="seccion-nosotros" class="panel hidden small">
+                <h2>Sobre Nosotros</h2>
+                <p>Somos un equipo de estudiantes que busca facilitar la gestión e intercambio de archivos entre usuarios. Queremos crear una plataforma intuitiva y segura para subir, buscar y compartir archivos de manera eficiente.</p>
+            </section>
+
+            <!-- Contacto -->
+            <section id="seccion-contacto" class="panel hidden small">
+                <h2>Contacto</h2>
+                <p>Correo: proyectoatlas04@gmail.com</p>
+                <p>Teléfono: +57 3197741431</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
