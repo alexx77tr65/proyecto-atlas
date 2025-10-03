@@ -3,61 +3,172 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Archivos Atlas - Panel</title>
-    <link rel="stylesheet" href="styles.css" href="register>
+    <title>Archivos Atlas - Inicio de Sesión</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="basededatos.js"></script> 
+    <style>
 
+
+    </style>
 </head>
 <body>
     <div class="page">
         <header>
             <nav aria-label="Navegación principal">
-                <a href="dashboard.html" id="btn-recopilador" class="active">Subir</a>
-                <a href="#" id="btn-buscar">Buscar</a>
-                <a href="#" id="btn-nosotros">Nosotros</a>
-                <a href="#" id="btn-contacto">Contacto</a>
-                <a href="index.html" id="btn-logout">Cerrar Sesión</a>
+                <a href="#seccion-login" id="btn-login-header" class="active">Inicio de Sesión</a>
             </nav>
         </header>
 
         <main class="container" role="main">
-            <!-- Recopilador -->
-            <section class="recopilador panel" id="seccion-recopilador">
-                <h2>Recopilador de Archivos</h2>
-                <form id="form-archivos" class="small" onsubmit="return false;">
+
+            <section class="login-container panel" id="seccion-login" aria-labelledby="login-title">
+                <h2 id="login-title">Iniciar Sesión</h2>
+                <form id="login-form" autocomplete="on">
                     <div class="form-group">
-                        <button id="btn-select-archivo" type="button" onclick="document.getElementById('archivo').click()">Seleccionar archivos</button>
-                        <input id="archivo" type="file" multiple style="display:none" />
+                        <label for="login-username">Usuario:</label>
+                        <input type="text" id="login-username" name="username" autocomplete="username" required>
                     </div>
                     <div class="form-group">
-                        <ul id="archivo-lista" class="archivo-lista" aria-live="polite"></ul>
-                        <span id="archivo-empty" class="empty">No hay archivos seleccionados.</span>
+                        <label for="login-password">Contraseña:</label>
+                        <input type="password" id="login-password" name="password" autocomplete="current-password" required>
                     </div>
+                    <button type="submit">Iniciar Sesión</button> 
                 </form>
             </section>
+            
+            <section id="app-nav-container">
+                <nav aria-label="Navegación de aplicación" id="app-nav">
+                    <a href="#seccion-recopilador" class="active" data-target="seccion-recopilador">Subir</a>
+                    <a href="#seccion-buscar" data-target="seccion-buscar">Buscar</a>
+                    <a href="#seccion-nosotros" data-target="seccion-nosotros">Nosotros</a>
+                    <a href="#seccion-contacto" data-target="seccion-contacto">Contacto</a>
+                </nav>
+            </section>
 
-            <!-- Buscar -->
-            <section id="seccion-buscar" class="panel hidden">
+            <section class="recopilador panel" id="seccion-recopilador">
+                <br>
+                <h2>Recopilador de Archivos</h2>
+                <form id="form-archivos" class="small" onsubmit="return false;">
+                    <label for="archivo">Selecciona archivos (múltiples permitidos):</label><br>
+                    <div class="form-group">
+                        <input type="file" id="archivo" name="archivo" multiple aria-label="Seleccionar archivos">
+                    </div>
+                    <ul class="archivo-lista" id="archivo-lista" aria-live="polite"></ul>
+                    <span id="archivo-empty" class="empty small">No hay archivos seleccionados.</span>
+                </form>
+            </section>
+            
+            <section id="seccion-buscar" class="panel">
                 <h2>Buscar Archivos</h2>
                 <div class="small">
                     <input type="text" id="buscar-input" placeholder="Escribe parte del nombre..." aria-label="Buscar archivos">
-                    <p class="muted">Escribe para filtrar los archivos listados en "Recopilador".</p>
+                    <p style="margin-top:0.5rem;color:var(--muted);">Escribe para filtrar los archivos.</p>
                 </div>
             </section>
 
-            <!-- Nosotros -->
-            <section id="seccion-nosotros" class="panel hidden small">
+            <section id="seccion-nosotros" class="panel small">
                 <h2>Sobre Nosotros</h2>
-                <p>Somos un equipo de estudiantes que busca facilitar la gestión e intercambio de archivos entre usuarios. Queremos crear una plataforma intuitiva y segura para subir, buscar y compartir archivos de manera eficiente.</p>
+                <p>somos un equipo de estudiantes que buscan facilitar la gestión y el intercambio de archivos entre usuarios. Nuestro objetivo es crear una plataforma intuitiva y segura para que los usuarios puedan subir, buscar y compartir archivos de manera eficiente.</p>
             </section>
 
-            <!-- Contacto -->
-            <section id="seccion-contacto" class="panel hidden small">
+            <section id="seccion-contacto" class="panel small">
                 <h2>Contacto</h2>
                 <p>Correo: proyectoatlas04@gmail.com</p>
                 <p>Teléfono: +57 3197741431</p>
             </section>
+            
+            <section class="register-container panel" id="seccion-registro" aria-labelledby="register-title">
+                <h2>Registro de Usuario</h2>
+                <p class="small">Funcionalidad de registro oculta.</p>
+            </section>
+
         </main>
     </div>
 </body>
-</html>
+    <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById('login-form');
+            const loginSection = document.getElementById('seccion-login');
+            const appNavContainer = document.getElementById('app-nav-container');
+            const appNavLinks = document.querySelectorAll('#app-nav a');
+            const appSections = document.querySelectorAll('main .panel:not(#seccion-login):not(#seccion-registro)');
+            const defaultSectionId = 'seccion-recopilador';
+            const btnLoginHeader = document.getElementById('btn-login-header');
 
+            // --- FUNCIÓN PRINCIPAL PARA CAMBIAR DE VISTA DENTRO DE LA APP ---
+            function showSection(targetId) {
+                // Oculta todas las secciones de la aplicación
+                appSections.forEach(section => {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                });
+                
+                // Muestra la sección deseada
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    targetSection.classList.add('active');
+                }
+
+                // Actualiza el estado activo en la barra de navegación
+                appNavLinks.forEach(link => {
+                    if (link.dataset.target === targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            // --- 1. GESTIÓN DEL INICIO DE SESIÓN ---
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault(); // Evita el envío tradicional del formulario
+                
+                // Simulación de login exitoso
+                loginSection.style.display = 'none'; // Oculta el login
+                appNavContainer.style.display = 'block'; // Muestra la barra de navegación
+                
+                // Muestra la sección principal (Recopilador)
+                showSection(defaultSectionId);
+
+                // Opcional: Cambia el botón del header si quieres simular un estado logueado
+                btnLoginHeader.textContent = 'Cerrar Sesión';
+                btnLoginHeader.setAttribute('href', '#seccion-login'); // Para volver al login
+
+                // Limpia los campos del formulario (opcional)
+                loginForm.reset();
+            });
+
+            // --- 2. GESTIÓN DE LA NAVEGACIÓN INTERNA ---
+            appNavLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault(); // Evita el salto de ancla en la URL
+                    const targetId = this.dataset.target;
+                    showSection(targetId);
+                });
+            });
+
+            // --- 3. GESTIÓN DEL HEADER PARA CERRAR SESIÓN ---
+            btnLoginHeader.addEventListener('click', function(e) {
+                if (btnLoginHeader.textContent === 'Cerrar Sesión') {
+                    e.preventDefault();
+                    // Oculta todo el contenido de la aplicación
+                    appNavContainer.style.display = 'none';
+                    appSections.forEach(section => section.style.display = 'none');
+                    
+                    // Muestra el login
+                    loginSection.style.display = 'block';
+                    
+                    // Restablece el botón del header
+                    btnLoginHeader.textContent = 'Inicio de Sesión';
+                    btnLoginHeader.classList.add('active');
+                }
+            });   
+
+            // Asegura que solo el login se vea al cargar
+            appSections.forEach(section => section.style.display = 'none');
+            loginSection.style.display = 'block'; 
+            appNavContainer.style.display = 'none';
+        });
+    </script>
+</html>
