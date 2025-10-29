@@ -9,6 +9,13 @@
     --container-padding: 2rem;
 }
 
+/* Animación para el fondo */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -21,12 +28,14 @@ html, body {
 }
 
 .page {
-    background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65));
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.65));
+    background-size: 200% 200%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1.5rem;
+    animation: gradientBG 15s ease infinite;
 }
 
 .container {
@@ -38,6 +47,21 @@ html, body {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     margin: 1rem 0;
     text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Animación para elementos que aparecen */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 header {
@@ -63,14 +87,33 @@ nav a {
     padding: 0.5rem 0.8rem;
     border-radius: 6px;
     font-weight: 600;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.3s ease;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
 }
 
 nav a:hover,
 nav a.active {
     background: rgba(13, 110, 253, 0.12);
     color: var(--accent);
+    transform: translateY(-2px);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: all 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 h1, h2 {
@@ -86,7 +129,15 @@ p {
     font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
-.panel { text-align: center; }
+.panel { 
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
 
 .login-container {
     width: 100%;
@@ -96,6 +147,160 @@ p {
     padding: 1.25rem;
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación para botones */
+button {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+/* Animación para inputs */
+input {
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* Animación para secciones que aparecen */
+section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilos para el recopilador de archivos */
+.upload-container {
+    border: 2px dashed var(--accent);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.upload-container:hover {
+    border-color: var(--accent);
+    background: rgba(13, 110, 253, 0.05);
+}
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.upload-label i {
+    font-size: 2.5rem;
+    color: var(--accent);
+}
+
+.upload-label input[type="file"] {
+    display: none;
+}
+
+.archivos-preview {
+    margin-top: 1.5rem;
+}
+
+.archivo-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.archivo-item {
+    background: white;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.archivo-item:hover {
+    transform: translateX(5px);
+}
+
+.archivo-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.archivo-nombre {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.archivo-tipo,
+.archivo-tamaño {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.archivo-progreso {
+    background: #f0f0f0;
+    border-radius: 4px;
+    height: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.barra-progreso {
+    background: var(--accent);
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.porcentaje {
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.archivo-item.subido {
+    border-left: 4px solid #10b981;
+}
+
+.archivo-item.error {
+    border-left: 4px solid var(--danger);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
 }
 
 .login-container h2 {

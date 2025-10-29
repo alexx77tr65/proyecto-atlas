@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Archivos Atlas - Inicio de Sesión</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="basededatos.js"></script> 
-    <style>
-
-
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="basededatos.js"></script>
+    <script src="js/recopilador.js"></script>
 </head>
 <body>
     <div class="page">
@@ -46,15 +44,22 @@
             </section>
 
             <section class="recopilador panel" id="seccion-recopilador">
-                <br>
                 <h2>Recopilador de Archivos</h2>
                 <form id="form-archivos" class="small" onsubmit="return false;">
-                    <label for="archivo">Selecciona archivos (múltiples permitidos):</label><br>
-                    <div class="form-group">
-                        <input type="file" id="archivo" name="archivo" multiple aria-label="Seleccionar archivos">
+                    <div class="upload-container">
+                        <label for="archivo" class="upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Arrastra archivos aquí o haz clic para seleccionar</span>
+                            <input type="file" id="archivo" name="archivo" multiple aria-label="Seleccionar archivos">
+                        </label>
                     </div>
-                    <ul class="archivo-lista" id="archivo-lista" aria-live="polite"></ul>
-                    <span id="archivo-empty" class="empty small">No hay archivos seleccionados.</span>
+                    <div class="archivos-preview">
+                        <ul class="archivo-lista" id="archivo-lista" aria-live="polite"></ul>
+                        <span id="archivo-empty" class="empty small">No hay archivos seleccionados.</span>
+                    </div>
+                    <button id="btn-subir" class="btn-primary" style="display: none;">
+                        Subir Archivos
+                    </button>
                 </form>
             </section>
             
