@@ -1,48 +1,13 @@
 :root {
-    --bg-color: #0d1117;
-    --text-color: #e6edf3;
-    --accent: #4184e4;
-    --muted: #8b949e;
-    --panel-bg: #161b22;
-    --input-bg: #21262d;
+    --bg-color: #0d1a26;
+    --text-color: #e8f4f8;
+    --accent: #0d4975;
+    --muted: #405864;
+    --panel-bg: #152736;
+    --input-bg: #1c2f3d;
+    --shadow-color: rgba(13, 26, 38, 0.4);
     --max-width: 900px;
     --container-padding: 2rem;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="light"] {
-    --bg-color: #f0f7ff;
-    --text-color: #0d1117;
-    --accent: #1a67d2;
-    --muted: #465b6d;
-    --panel-bg: #ffffff;
-    --input-bg: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-}
-
-
-
-.theme-switch {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background: var(--panel-bg);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-}
-
-.theme-switch:hover {
-    transform: scale(1.1);
 }
 
 /* Animación para el fondo */
@@ -63,7 +28,7 @@ html, body {
 }
 
 .page {
-    background: linear-gradient(135deg, var(--bg-color) 0%, #0a0d12 100%);
+    background: linear-gradient(135deg, var(--bg-color) 0%, #0a2538 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -110,14 +75,14 @@ nav {
     flex-wrap: wrap;
     gap: 1rem;
     padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 nav a {
     text-decoration: none;
-    color: var(--text-color);
+    color: #000000;
     padding: 0.5rem 0.8rem;
     border-radius: 6px;
     font-weight: 600;
@@ -129,8 +94,8 @@ nav a {
 
 nav a:hover,
 nav a.active {
-    background: rgba(13, 110, 253, 0.12);
-    color: var(--accent);
+    background: #e3f2fd;
+    color: #2980b9;
     transform: translateY(-2px);
 }
 
