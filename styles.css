@@ -1,12 +1,48 @@
 :root {
-    --bg-color: rgba(255, 255, 255, 0.9);
-    --text-color: #000000;
-    --accent: #0d6efd;
-    --muted: #374151;
-    --danger: #e11d48;
-    --panel-bg: rgba(255, 255, 255, 0.85);
+    --bg-color: #0d1117;
+    --text-color: #e6edf3;
+    --accent: #4184e4;
+    --muted: #8b949e;
+    --panel-bg: #161b22;
+    --input-bg: #21262d;
     --max-width: 900px;
     --container-padding: 2rem;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+    --bg-color: #f0f7ff;
+    --text-color: #0d1117;
+    --accent: #1a67d2;
+    --muted: #465b6d;
+    --panel-bg: #ffffff;
+    --input-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+.theme-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--panel-bg);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.theme-switch:hover {
+    transform: scale(1.1);
 }
 
 /* Animación para el fondo */
@@ -22,20 +58,17 @@ html, body {
     height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: var(--text-color);
-    background: url('https://aguarins.wordpress.com/wp-content/uploads/2014/05/entrega_banderas_81.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: var(--bg-color);
     text-align: center;
 }
 
 .page {
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.65));
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #0a0d12 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1.5rem;
-    animation: gradientBG 15s ease infinite;
 }
 
 .container {
@@ -44,7 +77,8 @@ html, body {
     background: var(--panel-bg);
     border-radius: 10px;
     padding: var(--container-padding);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 18px var(--shadow-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin: 1rem 0;
     text-align: center;
     opacity: 0;
@@ -139,15 +173,210 @@ p {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-.login-container {
+/* Estilos para la búsqueda */
+.search-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+}
+
+#buscar-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#buscar-input:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.search-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-filters select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-filters select:hover {
+    border-color: var(--accent);
+}
+
+.resultados-container {
+    margin-top: 1.5rem;
+}
+
+.resultado-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background: var(--bg-color);
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.resultado-item:hover {
+    transform: translateX(5px);
+    background: var(--panel-bg);
+}
+
+.resultado-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: var(--accent);
+}
+
+.resultado-info {
+    flex-grow: 1;
+}
+
+.resultado-nombre {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.resultado-meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.auth-container {
     width: 100%;
     max-width: 420px;
     margin: 0 auto 1rem;
-    background: rgba(255,255,255,0.98);
+    background: var(--panel-bg);
     padding: 1.25rem;
     border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--muted);
+}
+
+.auth-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 1rem;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.auth-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.auth-tab.active::after {
+    transform: scaleX(1);
+}
+
+.auth-tab:hover {
+    color: var(--accent);
+}
+
+.auth-content {
+    position: relative;
+}
+
+.auth-panel {
+    display: none;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.auth-panel.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--muted);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
 }
 
 .login-container:hover {

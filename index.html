@@ -6,10 +6,15 @@
     <title>Archivos Atlas - Inicio de Sesión</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <script src="basededatos.js"></script>
+        <script src="basededatos.js"></script>
     <script src="js/recopilador.js"></script>
+    <script src="js/theme-search.js"></script>
+    <script src="js/auth.js"></script>
 </head>
 <body>
+    <button class="theme-switch" id="theme-switch" aria-label="Cambiar tema">
+        <i class="fas fa-moon"></i>
+    </button>
     <div class="page">
         <header>
             <nav aria-label="Navegación principal">
@@ -19,19 +24,51 @@
 
         <main class="container" role="main">
 
-            <section class="login-container panel" id="seccion-login" aria-labelledby="login-title">
-                <h2 id="login-title">Iniciar Sesión</h2>
-                <form id="login-form" autocomplete="on">
-                    <div class="form-group">
-                        <label for="login-username">Usuario:</label>
-                        <input type="text" id="login-username" name="username" autocomplete="username" required>
+            <section class="auth-container" id="auth-sections">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+                    <button class="auth-tab" data-tab="register">Registrarse</button>
+                </div>
+
+                <div class="auth-content">
+                    <div class="auth-panel active" id="login-panel">
+                        <h2 id="login-title">Iniciar Sesión</h2>
+                        <form id="login-form" autocomplete="on">
+                            <div class="form-group">
+                                <label for="login-username">Usuario:</label>
+                                <input type="text" id="login-username" name="username" autocomplete="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Contraseña:</label>
+                                <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="login-password">Contraseña:</label>
-                        <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+
+                    <div class="auth-panel" id="register-panel">
+                        <h2 id="register-title">Crear Cuenta</h2>
+                        <form id="register-form" autocomplete="on">
+                            <div class="form-group">
+                                <label for="register-username">Usuario:</label>
+                                <input type="text" id="register-username" name="username" autocomplete="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">Correo Electrónico:</label>
+                                <input type="email" id="register-email" name="email" autocomplete="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Contraseña:</label>
+                                <input type="password" id="register-password" name="password" autocomplete="new-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-confirm-password">Confirmar Contraseña:</label>
+                                <input type="password" id="register-confirm-password" name="confirm-password" autocomplete="new-password" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Registrarse</button>
+                        </form>
                     </div>
-                    <button type="submit">Iniciar Sesión</button> 
-                </form>
+                </div>
             </section>
             
             <section id="app-nav-container">
@@ -65,9 +102,29 @@
             
             <section id="seccion-buscar" class="panel">
                 <h2>Buscar Archivos</h2>
-                <div class="small">
-                    <input type="text" id="buscar-input" placeholder="Escribe parte del nombre..." aria-label="Buscar archivos">
-                    <p style="margin-top:0.5rem;color:var(--muted);">Escribe para filtrar los archivos.</p>
+                <div class="search-container">
+                    <div class="search-input-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="buscar-input" placeholder="Buscar archivos..." aria-label="Buscar archivos">
+                    </div>
+                    <div class="search-filters">
+                        <select id="filtro-tipo" aria-label="Filtrar por tipo">
+                            <option value="">Todos los tipos</option>
+                            <option value="pdf">PDF</option>
+                            <option value="doc">Word</option>
+                            <option value="xls">Excel</option>
+                            <option value="img">Imágenes</option>
+                        </select>
+                        <select id="filtro-fecha" aria-label="Filtrar por fecha">
+                            <option value="">Cualquier fecha</option>
+                            <option value="hoy">Hoy</option>
+                            <option value="semana">Esta semana</option>
+                            <option value="mes">Este mes</option>
+                        </select>
+                    </div>
+                    <div id="resultados-busqueda" class="resultados-container">
+                        <!-- Los resultados se mostrarán aquí -->
+                    </div>
                 </div>
             </section>
 
@@ -90,90 +147,4 @@
         </main>
     </div>
 </body>
-    <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            const loginForm = document.getElementById('login-form');
-            const loginSection = document.getElementById('seccion-login');
-            const appNavContainer = document.getElementById('app-nav-container');
-            const appNavLinks = document.querySelectorAll('#app-nav a');
-            const appSections = document.querySelectorAll('main .panel:not(#seccion-login):not(#seccion-registro)');
-            const defaultSectionId = 'seccion-recopilador';
-            const btnLoginHeader = document.getElementById('btn-login-header');
-
-            // --- FUNCIÓN PRINCIPAL PARA CAMBIAR DE VISTA DENTRO DE LA APP ---
-            function showSection(targetId) {
-                // Oculta todas las secciones de la aplicación
-                appSections.forEach(section => {
-                    section.style.display = 'none';
-                    section.classList.remove('active');
-                });
-                
-                // Muestra la sección deseada
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.style.display = 'block';
-                    targetSection.classList.add('active');
-                }
-
-                // Actualiza el estado activo en la barra de navegación
-                appNavLinks.forEach(link => {
-                    if (link.dataset.target === targetId) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            }
-
-            // --- 1. GESTIÓN DEL INICIO DE SESIÓN ---
-            loginForm.addEventListener('submit', function (e) {
-                e.preventDefault(); // Evita el envío tradicional del formulario
-                
-                // Simulación de login exitoso
-                loginSection.style.display = 'none'; // Oculta el login
-                appNavContainer.style.display = 'block'; // Muestra la barra de navegación
-                
-                // Muestra la sección principal (Recopilador)
-                showSection(defaultSectionId);
-
-                // Opcional: Cambia el botón del header si quieres simular un estado logueado
-                btnLoginHeader.textContent = 'Cerrar Sesión';
-                btnLoginHeader.setAttribute('href', '#seccion-login'); // Para volver al login
-
-                // Limpia los campos del formulario (opcional)
-                loginForm.reset();
-            });
-
-            // --- 2. GESTIÓN DE LA NAVEGACIÓN INTERNA ---
-            appNavLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault(); // Evita el salto de ancla en la URL
-                    const targetId = this.dataset.target;
-                    showSection(targetId);
-                });
-            });
-
-            // --- 3. GESTIÓN DEL HEADER PARA CERRAR SESIÓN ---
-            btnLoginHeader.addEventListener('click', function(e) {
-                if (btnLoginHeader.textContent === 'Cerrar Sesión') {
-                    e.preventDefault();
-                    // Oculta todo el contenido de la aplicación
-                    appNavContainer.style.display = 'none';
-                    appSections.forEach(section => section.style.display = 'none');
-                    
-                    // Muestra el login
-                    loginSection.style.display = 'block';
-                    
-                    // Restablece el botón del header
-                    btnLoginHeader.textContent = 'Inicio de Sesión';
-                    btnLoginHeader.classList.add('active');
-                }
-            });   
-
-            // Asegura que solo el login se vea al cargar
-            appSections.forEach(section => section.style.display = 'none');
-            loginSection.style.display = 'block'; 
-            appNavContainer.style.display = 'none';
-        });
-    </script>
 </html>
