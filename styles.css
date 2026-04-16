@@ -448,4 +448,8 @@ body.sidebar-open main {
   main {
     padding: 20px 16px;
   }
+}body {
+  background: url('https://web.whatsapp.com/7cac4881-9c25-41a4-8158-a1905a55b3c2');
+  background-size: cover;
+  background-attachment: fixed;
 }
