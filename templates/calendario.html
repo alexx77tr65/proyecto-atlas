@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendario Académico - ATLAS</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+    .calendar-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .calendar-table th {
+      background: var(--accent);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .calendar-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .calendar-table tr:last-child td {
+      border-bottom: none;
+    }
+    .event-date {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .event-title {
+      color: var(--text);
+    }
+    .event-description {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Barra superior">
+      <div class="brand">
+        <button type="button" class="icon-button" id="sidebar-toggle" aria-label="Mostrar menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <strong>ATLAS</strong>
+      </div>
+      <div class="search">
+        <label for="busqueda">Buscar:</label>
+        <input id="busqueda" name="busqueda" type="text" placeholder="Buscar eventos..." />
+        <button type="button">Buscar</button>
+      </div>
+      <div class="actions">
+        <a href="/index2" class="btn">Volver</a>
+      </div>
+    </nav>
+  </header>
+  <div class="backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+  <aside id="sidebar" aria-hidden="true">
+    <nav>
+      <ul>
+        <li><a href="/index2#institucional">Institucional</a></li>
+        <li><a href="/index2#archivos">Mis archivos</a></li>
+        <li><a href="/index2#proyecto">Sobre nuestro proyecto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main style="padding: 32px; max-width: 1000px; margin: 0 auto;">
+    <a href="/index2" class="back-link">← Volver a Institucional</a>
+    
+    <h1>📅 Calendario Académico 2026</h1>
+    <p style="color: var(--muted); margin-bottom: 24px;">Fechas importantes y eventos clave del semestre académico.</p>
+
+    <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <p style="margin: 0; color: #1e3a8a;"><strong>Semestre Actual:</strong> 2026-1 · <strong>Cierre:</strong> 30 de noviembre de 2026</p>
+    </div>
+
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Evento</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="event-date">15 de mayo</td>
+          <td class="event-title">Inicio de clases</td>
+          <td class="event-description">Comienzan las actividades académicas del semestre</td>
+        </tr>
+        <tr>
+          <td class="event-date">22 de mayo</td>
+          <td class="event-title">Primer corte de evaluación</td>
+          <td class="event-description">Entrega de primeras tareas y trabajos</td>
+        </tr>
+        <tr>
+          <td class="event-date">25 de mayo</td>
+          <td class="event-title">Receso académico</td>
+          <td class="event-description">Festividad nacional - No hay clases</td>
+        </tr>
+        <tr>
+          <td class="event-date">05 de junio</td>
+          <td class="event-title">Segunda evaluación</td>
+          <td class="event-description">Presentación de proyectos colaborativos</td>
+        </tr>
+        <tr>
+          <td class="event-date">20 de julio</td>
+          <td class="event-title">Receso de verano</td>
+          <td class="event-description">Semana de descanso - Inicio vacaciones</td>
+        </tr>
+        <tr>
+          <td class="event-date">03 de agosto</td>
+          <td class="event-title">Regreso de clases</td>
+          <td class="event-description">Reanudación post-vacaciones</td>
+        </tr>
+        <tr>
+          <td class="event-date">15 de septiembre</td>
+          <td class="event-title">Tercera evaluación</td>
+          <td class="event-description">Examen de medio semestre</td>
+        </tr>
+        <tr>
+          <td class="event-date">10 de octubre</td>
+          <td class="event-title">Receso lectivo</td>
+          <td class="event-description">Actividades de refuerzo académico</td>
+        </tr>
+        <tr>
+          <td class="event-date">15 de noviembre</td>
+          <td class="event-title">Proyecto final</td>
+          <td class="event-description">Entrega de proyectos finales del semestre</td>
+        </tr>
+        <tr>
+          <td class="event-date">30 de noviembre</td>
+          <td class="event-title">Cierre del semestre</td>
+          <td class="event-description">Fin del semestre académico 2026-1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 24px;">
+      <h3>ℹ️ Información importante</h3>
+      <ul style="margin-left: 20px; color: var(--text);">
+        <li>Todas las fechas están sujetas a cambios sin previo aviso</li>
+        <li>Los docentes enviarán notificaciones en caso de cambios</li>
+        <li>Consulta regularmente esta página para actualizaciones</li>
+      </ul>
+    </div>
+  </main>
+
+  <script src="/static/sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comunicados - ATLAS</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+    .comunicado-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .comunicado-item h2 {
+      margin-bottom: 8px;
+    }
+    .comunicado-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 16px;
+    }
+    .comunicado-content {
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--accent-soft);
+      color: #1e3a8a;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .badge.urgente {
+      background: #fee2e2;
+      color: #7f1d1d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Barra superior">
+      <div class="brand">
+        <button type="button" class="icon-button" id="sidebar-toggle" aria-label="Mostrar menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <strong>ATLAS</strong>
+      </div>
+      <div class="search">
+        <label for="busqueda">Buscar:</label>
+        <input id="busqueda" name="busqueda" type="text" placeholder="Buscar comunicados..." />
+        <button type="button">Buscar</button>
+      </div>
+      <div class="actions">
+        <a href="/index2" class="btn">Volver</a>
+      </div>
+    </nav>
+  </header>
+  <div class="backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+  <aside id="sidebar" aria-hidden="true">
+    <nav>
+      <ul>
+        <li><a href="/index2#institucional">Institucional</a></li>
+        <li><a href="/index2#archivos">Mis archivos</a></li>
+        <li><a href="/index2#proyecto">Sobre nuestro proyecto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main style="padding: 32px; max-width: 900px; margin: 0 auto;">
+    <a href="/index2" class="back-link">← Volver a Institucional</a>
+    
+    <h1>📢 Comunicados Oficiales</h1>
+    <p style="color: var(--muted); margin-bottom: 24px;">Normas, anuncios y comunicaciones oficiales de la plataforma.</p>
+
+    <div class="comunicado-item">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+        <h2 style="margin: 0;">Nuevas políticas de evaluación 2026</h2>
+        <span class="badge">Importante</span>
+      </div>
+      <div class="comunicado-meta">
+        <span>📅 15 de mayo de 2026</span>
+        <span>👤 Dirección Académica</span>
+      </div>
+      <div class="comunicado-content">
+        <p>A partir del semestre 2026-1, implementaremos nuevas políticas de evaluación que buscan mejorar la equidad y transparencia en el proceso de calificación.</p>
+        <p><strong>Cambios principales:</strong></p>
+        <ul style="margin-left: 20px; color: var(--text);">
+          <li>Evaluación continua en lugar de exámenes puntuales</li>
+          <li>Retroalimentación semanal en cada asignatura</li>
+          <li>Opción de evaluación por competencias</li>
+          <li>Mayor peso en trabajos colaborativos</li>
+        </ul>
+        <p style="margin-top: 16px;">Más información en <strong>atlas.edu/nuevas-politicas</strong></p>
+      </div>
+    </div>
+
+    <div class="comunicado-item">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+        <h2 style="margin: 0;">Mantenimiento programado del sistema</h2>
+        <span class="badge">Aviso</span>
+      </div>
+      <div class="comunicado-meta">
+        <span>📅 12 de mayo de 2026</span>
+        <span>👤 Equipo Técnico</span>
+      </div>
+      <div class="comunicado-content">
+        <p>Se realizará mantenimiento del sistema el <strong>20 de mayo de 2026</strong> de 11:00 PM a 1:00 AM (hora local).</p>
+        <p>Durante este período, la plataforma no estará disponible. Se recomienda completar todas las entregas antes de esa fecha.</p>
+      </div>
+    </div>
+
+    <div class="comunicado-item">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+        <h2 style="margin: 0;">Suspensión de actividades académicas</h2>
+        <span class="badge urgente">Urgente</span>
+      </div>
+      <div class="comunicado-meta">
+        <span>📅 10 de mayo de 2026</span>
+        <span>👤 Rectoría</span>
+      </div>
+      <div class="comunicado-content">
+        <p>Por motivo de la celebración nacional, las actividades académicas quedarán suspendidas el 25 de mayo.</p>
+        <p>Las clases se reanudarán el 26 de mayo según el cronograma establecido.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/sidebar.js"></script>
+</body>
+</html>

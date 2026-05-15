@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bienestar Estudiantil - ATLAS</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .service-card h2 {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .service-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .service-description {
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .service-contact {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .contact-item a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Barra superior">
+      <div class="brand">
+        <button type="button" class="icon-button" id="sidebar-toggle" aria-label="Mostrar menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <strong>ATLAS</strong>
+      </div>
+      <div class="search">
+        <label for="busqueda">Buscar:</label>
+        <input id="busqueda" name="busqueda" type="text" placeholder="Buscar servicios..." />
+        <button type="button">Buscar</button>
+      </div>
+      <div class="actions">
+        <a href="/index2" class="btn">Volver</a>
+      </div>
+    </nav>
+  </header>
+  <div class="backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+  <aside id="sidebar" aria-hidden="true">
+    <nav>
+      <ul>
+        <li><a href="/index2#institucional">Institucional</a></li>
+        <li><a href="/index2#archivos">Mis archivos</a></li>
+        <li><a href="/index2#proyecto">Sobre nuestro proyecto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main style="padding: 32px; max-width: 900px; margin: 0 auto;">
+    <a href="/index2" class="back-link">← Volver a Institucional</a>
+    
+    <h1>❤️ Bienestar Estudiantil</h1>
+    <p style="color: var(--muted); margin-bottom: 24px;">Servicios y recursos para tu bienestar integral como estudiante.</p>
+
+    <div class="service-card">
+      <h2>🧠 Asesoría Académica</h2>
+      <div class="service-meta">Disponible de lunes a viernes, 8:00 AM - 5:00 PM</div>
+      <div class="service-description">
+        Contamos con un equipo de tutores especializados en diferentes áreas que pueden ayudarte con tus estudios, resolver dudas y orientarte académicamente.
+      </div>
+      <div class="service-contact">
+        <div class="contact-item">📧 <a href="mailto:asesoria@atlas.edu">asesoria@atlas.edu</a></div>
+        <div class="contact-item">📞 +1 234 567 8900 ext. 101</div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <h2>🧘 Salud Mental</h2>
+      <div class="service-meta">Disponible 24/7 · Confidencial</div>
+      <div class="service-description">
+        Servicio de apoyo psicológico y emocional. Nuestros profesionales están disponibles para acompañarte en momentos difíciles y brindarte estrategias de bienestar mental.
+      </div>
+      <div class="service-contact">
+        <div class="contact-item">💬 Chat de emergencia disponible 24/7</div>
+        <div class="contact-item">📞 Línea de crisis: +1 234 567 8901</div>
+        <div class="contact-item">📧 <a href="mailto:salud@atlas.edu">salud@atlas.edu</a></div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <h2>💪 Actividades y Bienestar Físico</h2>
+      <div class="service-meta">Múltiples horarios disponibles</div>
+      <div class="service-description">
+        Tenemos programas de ejercicio, yoga, danza y deportes. Nuestra meta es promover un estilo de vida saludable entre todos nuestros estudiantes.
+      </div>
+      <div class="service-contact">
+        <div class="contact-item">📍 Centro de bienestar - Campus principal</div>
+        <div class="contact-item">📧 <a href="mailto:actividades@atlas.edu">actividades@atlas.edu</a></div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <h2>💰 Apoyo Económico</h2>
+      <div class="service-meta">Becas · Ayudas financieras · Créditos</div>
+      <div class="service-description">
+        Programa de becas y ayudas financieras para estudiantes con necesidades económicas. Disponemos de diferentes opciones según tu situación.
+      </div>
+      <div class="service-contact">
+        <div class="contact-item">📧 <a href="mailto:becas@atlas.edu">becas@atlas.edu</a></div>
+        <div class="contact-item">📞 +1 234 567 8900 ext. 202</div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <h2>📚 Orientación Vocacional</h2>
+      <div class="service-meta">Asesoría personalizada para tu carrera</div>
+      <div class="service-description">
+        Ayudamos a estudiantes a explorar opciones de carrera, entender sus fortalezas y tomar decisiones informadas sobre su futuro académico y profesional.
+      </div>
+      <div class="service-contact">
+        <div class="contact-item">📅 Agenda una cita</div>
+        <div class="contact-item">📧 <a href="mailto:vocacional@atlas.edu">vocacional@atlas.edu</a></div>
+      </div>
+    </div>
+
+    <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 20px; border-radius: 8px; margin-top: 24px;">
+      <h3 style="margin-top: 0;">💡 Recursos Rápidos</h3>
+      <ul style="margin-left: 20px; color: #1e3a8a;">
+        <li><strong>Portal de recursos:</strong> <a href="#" style="color: var(--accent);">atlas.edu/recursos</a></li>
+        <li><strong>Foro de estudiantes:</strong> Conecta con otros compañeros</li>
+        <li><strong>Base de conocimiento:</strong> Soluciones a preguntas frecuentes</li>
+      </ul>
+    </div>
+  </main>
+
+  <script src="/static/sidebar.js"></script>
+</body>
+</html>

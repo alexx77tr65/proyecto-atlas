@@ -23,6 +23,46 @@
   --shadow-lg: 0 12px 28px rgba(16, 24, 40, 0.16);
 }
 
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --accent-soft: #1e3a8a;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.5);
+  }
+  
+  header input[type="text"] {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+  
+  header input[type="text"]::placeholder {
+    color: #94a3b8;
+  }
+  
+  .icon-button {
+    background: #1e293b;
+    border-color: #334155;
+  }
+  
+  .icon-button:hover {
+    background: #334155;
+  }
+  
+  .icon-button span {
+    background: #94a3b8;
+  }
+}
+
 html,
 body {
   height: 100%;
@@ -244,22 +284,23 @@ main p {
   border-radius: 16px;
   padding: 20px 24px;
   box-shadow: var(--shadow-sm);
-  display: none;
-}
-
-#institucional {
   display: block;
-}
-
-.screen:target {
-  display: block;
-}
-
-.screen:target ~ #institucional {
-  display: none;
+  margin-bottom: 24px;
 }
 
 /* Tarjetas */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -273,12 +314,13 @@ main p {
   border-radius: 16px;
   padding: 20px;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
+  border-color: var(--accent);
 }
 
 .card h2,
@@ -291,24 +333,37 @@ main p {
   color: var(--muted);
 }
 
-/* Botones */
 button,
 .btn {
   border: none;
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 11px 20px;
   background: var(--accent);
   color: var(--accent-contrast);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, filter 0.2s ease;
   box-shadow: var(--shadow-sm);
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 button:hover,
 .btn:hover {
   background: #1d4ed8;
   box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+button:active,
+.btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #9ca3af;
 }
 
 button:focus-visible,
@@ -335,12 +390,164 @@ form {
   margin-top: 12px;
 }
 
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="text"] {
+  width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 10px 12px;
-  background: #f9fafb;
+  padding: 11px 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upload-panel {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  max-width: 720px;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 24px;
+  border: 2px dashed var(--border);
+  border-radius: 18px;
+  background: rgba(56, 189, 248, 0.05);
+  color: var(--text);
+  text-align: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.upload-box:hover {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.08);
+  transform: translateY(-1px);
+}
+
+.upload-box strong {
+  font-size: 1rem;
+}
+
+.upload-box span {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.upload-status {
+  max-width: 720px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.upload-heading {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.file-list li small {
+  color: var(--muted);
+  margin-left: 10px;
+}
+
+.file-remove {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.file-remove:hover {
+  color: #1d4ed8;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[type="email"]:invalid:not(:placeholder-shown),
+input[type="password"]:invalid:not(:placeholder-shown) {
+  border-color: #dc2626;
+}
+
+input[type="email"]:valid:not(:placeholder-shown),
+input[type="password"]:valid:not(:placeholder-shown) {
+  border-color: #16a34a;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.error-message {
+  display: none;
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: -4px;
+}
+
+.error-message.show {
+  display: block;
+}
+
+.success-message {
+  display: none;
+  color: #16a34a;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(22, 163, 74, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #16a34a;
+}
+
+.success-message.show {
+  display: block;
 }
 
 body.sidebar-open aside {

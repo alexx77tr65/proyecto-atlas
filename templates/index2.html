@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATLAS</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+
+</head>
+<body>
+    <header>
+      <nav aria-label="Barra superior">
+        <div class="brand">
+          <button type="button" class="icon-button" id="sidebar-toggle" aria-label="Mostrar menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          <strong>Mi Plataforma</strong>
+        </div>
+        <div class="search">
+          <label for="busqueda">Buscar:</label>
+          <input id="busqueda" name="busqueda" type="text" placeholder="Buscar archivos, cursos..." />
+          <button type="button" id="searchBtn">Buscar</button>
+        </div>
+        <div class="actions">
+          <input id="archivo" name="archivo" type="file" />
+          <label for="archivo" class="btn">Subir archivo</label>
+        </div>
+      </nav>
+    </header>
+    <div class="backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+    <aside id="sidebar" aria-hidden="true">
+      <nav>
+        <ul>
+          <li><a href="#institucional">Institucional</a></li>
+          <li><a href="#archivos">Mis archivos</a></li>
+          <li><a href="#subir">Subir archivos</a></li>
+          <li><a href="#proyecto">Sobre nuestro proyecto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main>
+      <section id="archivos" class="screen" data-section="archivos">
+        <h1>Mis archivos</h1>
+        <p>Gestiona tus recursos, entregas y materiales del curso desde un solo lugar.</p>
+        <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px;">
+          <span class="badge">Guardado</span>
+          <span class="badge">Pendiente</span>
+          <span class="badge">Nuevo</span>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <h3>Guía de estudio</h3>
+            <small>PDF · Semana 4</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Material de repaso para el examen parcial con ejemplos prácticos y guías paso a paso.</p>
+          </article>
+          <article class="card">
+            <h3>Actividad 2</h3>
+            <small>Entrega · Viernes</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Tarea de programación con objetivos claros y criterios de evaluación.</p>
+          </article>
+          <article class="card">
+            <h3>Lectura 1</h3>
+            <small>Artículo · 12 páginas</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Lectura obligatoria sobre fundamentos teóricos del curso.</p>
+          </article>
+          <article class="card">
+            <h3>Video clase</h3>
+            <small>MP4 · 18 min</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Registro de la sesión grabada para repasar los conceptos clave.</p>
+          </article>
+          <article class="card">
+            <h3>Rúbrica</h3>
+            <small>PDF · Evaluación</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Criterios de calificación para asegurarte de cumplir los requisitos.</p>
+          </article>
+          <article class="card">
+            <h3>Proyecto final</h3>
+            <small>Carpeta · Activo</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 10px;">Documentación y entregables del proyecto con estado de avance.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="subir" class="screen" data-section="subir">
+        <h1>Subir archivos</h1>
+        <p>Arrastra tus archivos o selecciónalos desde tu equipo para mantenerlos disponibles en tu espacio de trabajo.</p>
+        <div class="upload-panel">
+          <label for="uploadFile" class="upload-box" id="uploadBox">
+            <strong>Haz clic o arrastra archivos aquí</strong>
+            <span>PDF, DOCX, PPT, imágenes, ZIP</span>
+            <input id="uploadFile" name="uploadFile" type="file" multiple hidden />
+          </label>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button type="button" class="btn" id="uploadButton">Seleccionar archivos</button>
+            <button type="button" class="btn" id="sendUploadButton">Enviar archivos</button>
+          </div>
+        </div>
+        <div class="upload-status" id="uploadStatus">
+          <p class="upload-heading">Archivos seleccionados</p>
+          <ul class="file-list" id="fileList">
+            <li>No hay archivos seleccionados aún.</li>
+          </ul>
+          <p id="uploadResult" style="margin-top: 12px; color: var(--muted);"></p>
+        </div>
+      </section>
+
+      <section id="proyecto" class="screen" data-section="proyecto">
+        <h1>Sobre nuestro proyecto</h1>
+        <p>Este proyecto reúne todas las herramientas necesarias para el aprendizaje, la comunicación y la gestión académica.</p>
+        <div style="margin: 20px 0; color: var(--text); line-height: 1.7;">
+          <p>El objetivo es crear una plataforma educativa intuitiva donde los estudiantes puedan acceder a sus recursos, recibir información institucional y conectarse con el equipo académico.</p>
+          <p>Estamos construyendo funciones para:</p>
+          <ul style="margin-left: 20px; color: var(--muted);">
+            <li>Monitorear el progreso académico</li>
+            <li>Compartir anuncios y comunicados oficiales</li>
+            <li>Facilitar la entrega de tareas y documentos</li>
+            <li>Ofrecer apoyo en bienestar estudiantil</li>
+          </ul>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <h3>🎯 Misión</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">Ofrecer una plataforma completa para hacer más fácil el estudio, las entregas y la comunicación académica.</p>
+          </article>
+          <article class="card">
+            <h3>🌟 Visión</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">Conectar estudiantes y educadores con tecnología moderna, práctica y confiable.</p>
+          </article>
+          <article class="card">
+            <h3>📊 Avance</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">45% completado · diseño, contenido y funciones principales ya disponibles.</p>
+          </article>
+          <article class="card">
+            <h3>👥 Equipo</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">Integrantes de diseño, desarrollo, pedagogía y soporte trabajando en el lanzamiento.</p>
+          </article>
+          <article class="card">
+            <h3>🚀 Características</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">Login, panel de archivos, anuncios institucionales y gestión de tareas.</p>
+          </article>
+          <article class="card">
+            <h3>💡 Innovación</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">Diseño responsive y mejoras continuas para que sea fácil usar en cualquier dispositivo.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="institucional" class="screen" data-section="institucional">
+        <h1>Institucional</h1>
+        <p>Documentos oficiales, políticas y servicios clave para estudiantes y personal académico.</p>
+        <div style="margin: 20px 0; color: var(--text); line-height: 1.7;">
+          <p>En esta sección encontrarás todo lo necesario para mantenerte al día con el calendario académico, recibir comunicaciones oficiales y conocer los servicios de apoyo disponibles.</p>
+          <p>Las opciones marcadas con "Ver detalle" te llevan a páginas completas con información extendida.</p>
+        </div>
+        <div class="cards-grid">
+          <a href="/calendario" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+            <h3>📅 Calendario académico</h3>
+            <small>Actualizado hoy</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">Fechas de inicio, corte y cierre de semestre, descansos y evaluaciones.</p>
+            <p style="color: var(--accent); font-size: 0.9rem; margin-top: auto; padding-top: 8px;">Ver detalle →</p>
+          </a>
+          <a href="/comunicados" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+            <h3>📢 Comunicados oficiales</h3>
+            <small>Normas y anuncios</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">Anuncios recientes del equipo académico y administrativo.</p>
+            <p style="color: var(--accent); font-size: 0.9rem; margin-top: auto; padding-top: 8px;">Ver detalle →</p>
+          </a>
+          <a href="/bienestar" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+            <h3>❤️ Bienestar estudiantil</h3>
+            <small>Apoyo y servicios</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">Apoyo académico, psicológico y servicios de salud para estudiantes.</p>
+            <p style="color: var(--accent); font-size: 0.9rem; margin-top: auto; padding-top: 8px;">Ver detalle →</p>
+          </a>
+          <article class="card">
+            <h3>📜 Reglamento interno</h3>
+            <small>Documento oficial</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">Políticas de conducta, asistencia y exámenes.</p>
+          </article>
+          <article class="card">
+            <h3>🔐 Privacidad</h3>
+            <small>Política de datos</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">Protección de datos personales y uso seguro de la plataforma.</p>
+          </article>
+          <article class="card">
+            <h3>📧 Contacto institucional</h3>
+            <small>Soporte y consultas</small>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">info@atlas.edu · +1 234 567 8900</p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <script src="/static/sidebar.js"></script>
+    <script src="/static/dashboard.js"></script>
+  </body>
+</html>
