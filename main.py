@@ -1,71 +1,68 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pathlib import Path
 
+# Configuración de carpetas
 BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 STATIC_DIR = BASE_DIR / "static"
 UPLOAD_DIR = BASE_DIR / "uploads"
 
+# Asegurar que las carpetas existan al arrancar la app
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI()
 
-# Servir archivos estáticos: CSS, JS e imágenes
+# Servir archivos estáticos
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 def template_response(filename: str) -> FileResponse:
-    return FileResponse(TEMPLATES_DIR / filename, media_type="text/html")
+    path = TEMPLATES_DIR / filename
+    if not path.exists():
+        # Mensaje de error en español si la página no existe
+        raise HTTPException(status_code=404, detail="Página no encontrada")
+    return FileResponse(path, media_type="text/html")
+
+# --- RUTAS DE NAVEGACIÓN ---
 
 @app.get("/")
 async def root():
     return template_response("index.html")
 
-@app.get("/index2")
-async def index2():
-    return template_response("index2.html")
+# Ruta dinámica: Captura cualquier página (ej: /calendario, /bienestar)
+@app.get("/{page_name}")
+async def render_page(page_name: str):
+    # Si el usuario no escribe el .html, se lo agregamos automáticamente
+    if not page_name.endswith(".html"):
+        filename = f"{page_name}.html"
+    else:
+        filename = page_name
+        
+    return template_response(filename)
 
-@app.get("/index2.html")
-async def index2_html():
-    return template_response("index2.html")
-
-@app.get("/comunicados")
-async def comunicados():
-    return template_response("comunicados.html")
-
-@app.get("/comunicados.html")
-async def comunicados_html():
-    return template_response("comunicados.html")
-
-@app.get("/calendario")
-async def calendario():
-    return template_response("calendario.html")
-
-@app.get("/calendario.html")
-async def calendario_html():
-    return template_response("calendario.html")
-
-@app.get("/bienestar")
-async def bienestar():
-    return template_response("bienestar.html")
-
-@app.get("/bienestar.html")
-async def bienestar_html():
-    return template_response("bienestar.html")
+# --- SUBIDA DE ARCHIVOS ---
 
 @app.post("/upload")
 async def upload_files(files: list[UploadFile] = File(...)):
-    saved_files = []
+    archivos_guardados = []
+    
     for upload in files:
-        destination = UPLOAD_DIR / upload.filename
+        # Reemplazamos espacios por guiones bajos para evitar problemas en URLs
+        nombre_limpio = upload.filename.replace(" ", "_")
+        destination = UPLOAD_DIR / nombre_limpio
+        
+        # Leer y guardar el archivo
         content = await upload.read()
         destination.write_bytes(content)
-        saved_files.append({
-            "filename": upload.filename,
-            "content_type": upload.content_type,
-            "size": len(content)
+        
+        # Información del archivo con claves en español
+        archivos_guardados.append({
+            "nombre_archivo": nombre_limpio,
+            "tipo_contenido": upload.content_type,
+            "url": f"/uploads/{nombre_limpio}",
+            "tamano_bytes": len(content)
         })
-    return {"success": True, "files": saved_files}
-
-    
+        
+    return {"exito": True, "archivos": archivos_guardados}
